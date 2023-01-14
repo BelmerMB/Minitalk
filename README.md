@@ -7,7 +7,7 @@
 # Cloning
 
  ```
- git clone --recursive git@github.com:mlanca-c/Minitalk.git
+ git clone  https://github.com/BelmerMB/Minitalk
  cd Minitalk
  ```
  
