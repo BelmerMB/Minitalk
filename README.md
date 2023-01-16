@@ -30,3 +30,6 @@
 # Intro
 
 # Useful Links
+*[Bit manipulation](https://www.youtube.com/watch?v=7jkIUgLC29I)
+*[Kill](https://www.tutorialspoint.com/unix_system_calls/kill.htm)
+*[Signal Handlers](https://www.tutorialspoint.com/unix_system_calls/kill.htm)
