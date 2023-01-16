@@ -1,21 +1,30 @@
-NAME =		client
+NAME =
+CLIENT =	client
+SERVER = 	server
 HEADER =	./includes
 SRC_DIR =	./src
 OBJ_DIR =	./objects
 LIBFT_DIR =	./printf
 LIBFT =		$(addprefix $(LIBFT_DIR)/, libftprintf.a)
-
-SRC_FILES =	client.c 
+SRC_CLIENT =	client.c
+SRC_SERVER =	server.c
 
 FLAGS_ERROR =	-Wall -Wextra -Werror
-SRC =			$(addprefix $(SRC_DIR)/, $(SRC_FILES))
-OBJ =			$(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
+SRC_S =			$(addprefix $(SRC_DIR)/, $(SRC_SERVER))
+OBJ_S =			$(addprefix $(OBJ_DIR)/, $(SRC_SERVER:.c=.o))
+
+SRC_C=			$(addprefix $(SRC_DIR)/, $(SRC_CLIENT))
+OBJ_C =			$(addprefix $(OBJ_DIR)/, $(SRC_CLIENT:.c=.o))
+
 CFLAGS =		-g3 -O3
 
-all: $(NAME)
+all: $(SERVER) $(CLIENT)
 
-$(NAME): $(OBJ) $(LIBFT)
-	cc $(OBJ) $(LIBFT) $(CFLAGS) -o $(NAME)
+$(CLIENT): $(OBJ_C) $(LIBFT)
+	cc $(FLAGS_ERROR) $(OBJ_C) $(LIBFT) $(CFLAGS) -o $(CLIENT)
+
+$(SERVER): $(OBJ_S) $(LIBFT)
+	cc $(FLAGS_ERROR) $(OBJ_S) $(LIBFT) $(CFLAGS) -o $(SERVER)
 
 $(LIBFT):
 	@make -C $(LIBFT_DIR)
@@ -29,9 +38,10 @@ clean:
 	make clean -C $(LIBFT_DIR)
 
 fclean: clean
-	rm -f $(NAME)
-	rm -f $(LIBFT)
-	make fclean -C $(LIBFT_DIR)
+	rm -f $(CLIENT)
+	rm -f $(SERVER)
+	@rm -f $(LIBFT)
+	@make fclean -C $(LIBFT_DIR)
 
 re: fclean all
 
