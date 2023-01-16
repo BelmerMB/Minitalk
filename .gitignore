@@ -1,3 +1,6 @@
-.vscode
-.o
-.out
+*.vscode
+*.o
+*.a
+*.out
+client
+server
