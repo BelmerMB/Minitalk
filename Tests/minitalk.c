@@ -6,22 +6,17 @@
 /*   By: emetras- <emetras-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:51:52 by emetras-          #+#    #+#             */
-/*   Updated: 2023/01/13 18:48:47 by emetras-         ###   ########.fr       */
+/*   Updated: 2023/01/20 12:19:32 by emetras-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 # include <signal.h>
 
-void chamou_sinal(int signal)
+void    sig_handler(int signal)
 {
-    printf("voce mandou sinal para mim!\n");
-
     if(signal == SIGUSR1)
         printf("voce mando sinal SIGUSR1\n");
-
-    if(signal == 15)
-        printf("voce mando sinal Padrao\n");
 
     if(signal == SIGUSR2)
         printf("voce mando sinal SIGUSR2\n");
@@ -30,23 +25,14 @@ void chamou_sinal(int signal)
 
 int main (void)
 {
-    int i;
-    i = 0;
-    int a = getpid();
-    printf("%d",a);
-    // signal: é uma função, que a recener um sinal,os parametro da função são:
-    // 1º parametro é o tipo de sinal, so vai chamar a função "chamou_sinal", se o sinal for o mesmo tipo
-    // 2º é função do tipo "void função (int numero)", esse "numero" eh o valor do sinal
-    signal( SIGUSR1, chamou_sinal); // so vai chamar a função chamou sinal se o sinal for SIGUSR1
-    signal( 15,      chamou_sinal); // so vai chamar a função chamou sinal se o sinal for padrão
-    signal( SIGUSR2, chamou_sinal); // so vai chamar a função chamou sinal se o sinal for SIGUSR2
+    struct sigaction	sa_signal;
 
-
-    while( i< 1000)
-    {
-        printf("%d\n", i);
-        sleep(1);
-        i++;
-    }
-    return (0);
+    sa_signal.sa_handler = 0;
+	sa_signal.sa_flags = SA_SIGINFO;
+	sa_signal.sa_sigaction = &sig_handler;
+	sigaction(SIGUSR1, &sa_signal, NULL);
+	sigaction(SIGUSR2, &sa_signal, NULL);
+	ft_printf("Server PID: %d\n", getpid());
+	while (1)
+		pause();
 }
